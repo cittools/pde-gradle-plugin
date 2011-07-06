@@ -79,6 +79,8 @@ public abstract class PdeConvention {
                 
                 if (!usePreviousLinks && !loc.endsWith("/eclipse")) {
                     loc += "/eclipse"
+                } else if (usePreviousLinks && loc.endsWith("/eclipse")) {
+                    loc = loc.substring(0, loc.length() - "/eclipse".length())
                 }
                 
                 if (!(new File(loc).exists())) {
@@ -108,10 +110,28 @@ public abstract class PdeConvention {
                 if (!new File(path).exists()) {
                     throw new GradleException("ERROR in ${this.targetFile}: ${path} does not exist.")
                 }
-                paths << normPathForAnt(path)
+                paths << path
             }
         }
-        return paths
+        
+        List<String> locations = new ArrayList<String>();
+        for (String loc : paths) {
+            loc = normPathForAnt(loc)
+            
+            if (!usePreviousLinks && !loc.endsWith("/eclipse")) {
+                loc += "/eclipse"
+            } else if (usePreviousLinks && loc.endsWith("/eclipse")) {
+                loc = loc.substring(0, loc.length() - "/eclipse".length())
+            }
+            
+            if (!(new File(loc).exists())) {
+                throw new GradleException("${loc} does not exist.")
+            }
+            
+            locations << normPathForAnt(loc)
+        }
+        
+        return locations
     }
     
     public String getRcpCleaner() {

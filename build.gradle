@@ -21,7 +21,7 @@ apply plugin: 'eclipse'
 
 archivesBaseName = 'pdePlugin'
 group = "com.thalesgroup.gradle.plugins"
-version = '7.1.4' // + new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
+version = '7.1.5' // + new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
 
 
 
